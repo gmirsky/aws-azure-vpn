@@ -1,4 +1,4 @@
-# Tunnel from Azure to AWS vpn_connection_1 (tunnel1)
+# Tunnel from Azure to AWS vpn_connection_1 (tunnel 1)
 resource "azurerm_local_network_gateway" "local_network_gateway_1_tunnel1" {
   name                = "local_network_gateway_1_tunnel1"
   location            = azurerm_resource_group.resource_group.location
@@ -16,7 +16,7 @@ resource "azurerm_local_network_gateway" "local_network_gateway_1_tunnel1" {
   )
 }
 
-# Tunnel from Azure to AWS vpn_connection_1 (tunnel2)
+# Tunnel from Azure to AWS vpn_connection_1 (tunnel 2)
 resource "azurerm_local_network_gateway" "local_network_gateway_1_tunnel2" {
   name                = "local_network_gateway_1_tunnel2"
   location            = azurerm_resource_group.resource_group.location
@@ -33,7 +33,7 @@ resource "azurerm_local_network_gateway" "local_network_gateway_1_tunnel2" {
   )
 }
 
-# Tunnel from Azure to AWS vpn_connection_2 (tunnel1)
+# Tunnel from Azure to AWS vpn_connection_2 (tunnel 1)
 resource "azurerm_local_network_gateway" "local_network_gateway_2_tunnel1" {
   name                = "local_network_gateway_2_tunnel1"
   location            = azurerm_resource_group.resource_group.location
@@ -49,7 +49,7 @@ resource "azurerm_local_network_gateway" "local_network_gateway_2_tunnel1" {
     }
   )
 }
-# Tunnel from Azure to AWS vpn_connection_2 (tunnel2)
+# Tunnel from Azure to AWS vpn_connection_2 (tunnel 2)
 resource "azurerm_local_network_gateway" "local_network_gateway_2_tunnel2" {
   name                = "local_network_gateway_2_tunnel2"
   location            = azurerm_resource_group.resource_group.location

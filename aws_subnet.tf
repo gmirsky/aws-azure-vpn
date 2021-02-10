@@ -1,4 +1,3 @@
-# The subnet where the Virtual Machine will live
 resource "aws_subnet" "subnet_1" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = var.aws_subnet_cidr_block
