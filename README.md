@@ -1,6 +1,5 @@
 # AWS to Azure site to site VPN provisioned with Terraform
-
-## THIS IS A WORK IN PROGRESS! Do not use.
+THIS IS A WORK IN PROGRESS! Do not use
 
 Terraform code to deploy a highly available site-to-site VPN between AWS and Azure.
 
@@ -24,7 +23,7 @@ Additionally logic is compartmentalized for reusuability and for code hygiene by
 
 - Module: `create_test_vms` - This module will create a AWS EC2 instance and a Azure VM in the respective environemnts to test the VPN tunnel for connectivity.
 
-- Module `key-pair` - This public module from the Terraform Registry (https://registry.terraform.io/modules/terraform-aws-modules/key-pair/aws/latest) handles all the AWS key pair processing. The output is also used by the module `create_test_vms`.
+- Module `key-pair` - This public module from the [Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/key-pair/aws/latest) handles all the AWS key pair processing. The output is also used by the module `create_test_vms`.
 
 ### Code Notes
 
@@ -40,7 +39,7 @@ The BGP (Border Gateway Protocol) ASN  (Autonomous System Numbers) is set to 650
 
 Adjust the values in the terraform.tfvars file to reflect your needs and environment.
 
-```
+```bash
 custom_tags = {
   project  = "AWS to Azure VPN"
   Jira     = "AWS-917"
@@ -70,29 +69,31 @@ terraform init
 
 The init command will load up the terraform modules and providers into your environment.
 
+```bash
 terraform fmt
+```
 
 The fmt (formt) command, will format your code and also spot any glaring errors like missing quotes, commas, etcetera.
 
-```
+```bash
 terraform validate
 ```
 
 The validate command will perform a more in depth error checking of your terraform code.
 
-```
+```bash
 terraform plan -out=tfplan
 ```
 
 The plan command will create a blueprint of what terraform plans to do. Review the output to make sure it will do what you want it to do. This script will provision 40+ resources across the AWS and Azure environments.
 
-```
+```bash
 terraform apply tfplan
 ```
 
 The apply command will execute what terraform planned in the plan command and provision the cloud resources to both the AWS and Azure clouds simultaneously. Be aware that this script can take over thirty (30) minutes to execute. Azure alone take about twenty minutes to provision its VPN gateway and AWS takes around twelve (12) minutes.
 
-```
+```bash
 terraform destroy
 ```
 
