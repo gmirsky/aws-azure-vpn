@@ -1,11 +1,12 @@
 # AWS to Azure site to site VPN provisioned with Terraform
+
 Terraform code to deploy a highly available site-to-site VPN between AWS and Azure.
 
 This script will create a tunnel between an AWS VPC and an Azure vNet, connecting resources from each cloud provider as if they were in the same local network.
 
 The configuration is highly available so that it has enough resources to avoid any disruption during a  cloud provider maintenance window.
 
-### Architecture
+## Architecture
 
 The main script contains all the necessary HCL commands for terraform to provision the VPN. There are also multiple local modules used to compartmentalize the logic for processing AWS specific user tags, Azure specific user tags, Azure region naming and finally the creation of test servers to test the functionality of the VPN gateways and tunnels.
 
@@ -23,9 +24,9 @@ Additionally logic is compartmentalized for reusuability and for code hygiene by
 
 - Module `key-pair` - This public module from the [Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/key-pair/aws/latest) handles all the AWS key pair processing. The output is also used by the module `create_test_vms`.
 
-### Programming and Operational Notes
+## Programming and Operational Notes
 
-Be aware that this script <u>can take over thirty (30) minutes to complete</u> due to the length of time it takes to create gateways in both AWS and Azure.
+Be aware that this script can take over thirty (30) minutes to complete due to the length of time it takes to create gateways in both AWS and Azure.
 
 To change the AWS region you must change the region in the AWS provider stanza in the file: `provider.tf`. It is currently set to us-east-1 in this repository. At this time you can not parameterize this value in terraform.
 
@@ -50,7 +51,7 @@ In the end we wind up with:
 - Four Local Network Gateways, one for each AWS VPN tunnel.
 - Four Virtual Network Gateway connections, one for each AWS VPN tunnel.
 
-### Provisioning with Terraform
+## Provisioning with Terraform
 
 Adjust the values in the terraform.tfvars file to reflect your needs and environment. Remember if you change the AWS region you need to modify the `provider.tf` file too.
 
@@ -106,7 +107,7 @@ The plan command will create a blueprint of what terraform plans to do. Review t
 terraform apply tfplan
 ```
 
-The apply command will execute what terraform planned in the plan command and provision the cloud resources to both the AWS and Azure clouds simultaneously. 
+The apply command will execute what terraform planned in the plan command and provision the cloud resources to both the AWS and Azure clouds simultaneously.
 
 ```bash
 terraform destroy
@@ -114,29 +115,28 @@ terraform destroy
 
 The destroy command will remove all the assets provisioned from both AWS and Azure.
 
-### Testing the VPN connection and connectivity
+## Testing the VPN connection and connectivity
 
 On AWS, go to **VPC > Site-to-Site VPN Connections** and take a look at the Tunnel Details tab under vpn_connection_1 and vpn_connection_2. The VPN connection should be "available" and the two tunnels should in a "up" status.
 
 ![AWS-VPN-Connection](./screenshots/AWS-VPN-Connection.png)
 
-On Azure, go to **Virtual Network Gateways > Connections** and check to see if all the connections are in a "connected" status. 
+On Azure, go to **Virtual Network Gateways > Connections** and check to see if all the connections are in a "connected" status.
 
 ![Azure-Virtual-Network-Gateway](./screenshots/Azure-Virtual-Network-Gateway.png)
 
 In the above screen shot we can see one connection is stuck in the "updating" status. This seems to be a known issue with Azure virtual network gateways. You can reset the gateway with the following instructions from Microsoft for [resetting a gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/reset-gate).
 
-Connect to each instance/vm via the public IP on the respective servers and then ping the other's private IP address to test the connectivity over the VPN. 
+Connect to each instance/vm via the public IP on the respective servers and then ping the other's private IP address to test the connectivity over the VPN.
 
 The private_key.pem file is generated and saved in the root terraform directory of this script.
 
 In the below screen shots our AWS server has an IP address of `192.168.1.212` and its counterpart in Azure has a IP address of `10.0.1.4`
 
-##### AWS
+### AWS
 
 ![AWS-test-EC2-instance](./screenshots/AWS-test-EC2-instance.png)
 
-##### Azure
+### Azure
 
 ![Azure-test-VM](./screenshots/Azure-test-VM.png)
-
