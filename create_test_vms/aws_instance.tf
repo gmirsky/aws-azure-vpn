@@ -8,7 +8,7 @@ resource "aws_instance" "vm" {
   tags = merge(
     var.aws_user_tags,
     {
-      Name = "aws_azure_vpn_test_server"
+      Name = "awsazuretestserver"
     }
   )
 }
