@@ -37,3 +37,6 @@ override.tf.json
 
 notes.txt
 
+*.md5
+public_key*
+public_key*.*
