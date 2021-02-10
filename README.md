@@ -1,6 +1,4 @@
 # AWS to Azure site to site VPN provisioned with Terraform
-THIS IS A WORK IN PROGRESS! Do not use
-
 Terraform code to deploy a highly available site-to-site VPN between AWS and Azure.
 
 This script will create a tunnel between an AWS VPC and an Azure vNet, connecting resources from each cloud provider as if they were in the same local network.
@@ -25,7 +23,9 @@ Additionally logic is compartmentalized for reusuability and for code hygiene by
 
 - Module `key-pair` - This public module from the [Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/key-pair/aws/latest) handles all the AWS key pair processing. The output is also used by the module `create_test_vms`.
 
-### Code Notes
+### Programming and Operational Notes
+
+Be aware that this script <u>can take over thirty (30) minutes to complete</u> due to the length of time it takes to create gateways in both AWS and Azure.
 
 To change the AWS region you must change the region in the AWS provider stanza in the file: `provider.tf`. It is currently set to us-east-1 in this repository. At this time you can not parameterize this value in terraform.
 
@@ -35,9 +35,24 @@ The allocation_method in `azurerm_public_ip` in file `azurerm_public_ip.tf` must
 
 The BGP (Border Gateway Protocol) ASN  (Autonomous System Numbers) is set to 65000 (Private ASN) on the AWS Customer Gateway as required by AWS.
 
-### Provision
+This script uses Terraform’s `data resource` to fetch the two public IP addresses from AWS. This is because the two IP addresses are `Dynamic` and are generated only after Azure’s Virtual Network Gateway is up and running.  The `azurerm_public_ip` data resource has an interpolated name so that the script can cope with inter-cloud dependencies.
 
-Adjust the values in the terraform.tfvars file to reflect your needs and environment.
+This is critical in getting the Azure public IP addresses, which are generated only after the Virtual Network Gateway is created and has to used as input on the AWS provisioning side of the VPN. Using the interpolation in the `name` argument forces the data resource to be executed only after the Azure Virtual Network Gateway is created.
+
+Using the Terraform `depends_on` clause causes issues when dealing with two differnt cloud providers. The `depends_on` clause forces the read of the data source to always happen in the apply phase and therefore it triggers changes in the AWS components depending on what resources have provisioned first. This causes the VPN configuration to never converge and thus a loss of connectivity.
+
+In general, it is suggested to build all new or to destroy. Incremental applies may not work they way you are used to in Terraform due to the nature of the two competing cloud providers and how they are architected and how they provision assets.
+
+Each `AWS VPN Connection` created has *two tunnels* with IP addresses and secret keys. To accomplish full high availability, we point each Azure Virtual Network Gateway IP address to the two IP addresses on AWS thus creating a connection mesh.
+
+In the end we wind up with:
+
+- Four Local Network Gateways, one for each AWS VPN tunnel.
+- Four Virtual Network Gateway connections, one for each AWS VPN tunnel.
+
+### Provisioning with Terraform
+
+Adjust the values in the terraform.tfvars file to reflect your needs and environment. Remember if you change the AWS region you need to modify the `provider.tf` file too.
 
 ```bash
 custom_tags = {
@@ -61,7 +76,7 @@ create_test_vms                   = true
 environment                       = "dev"
 ```
 
-Perform the following commands
+Perform the following commands:
 
 ```bash
 terraform init
@@ -91,7 +106,7 @@ The plan command will create a blueprint of what terraform plans to do. Review t
 terraform apply tfplan
 ```
 
-The apply command will execute what terraform planned in the plan command and provision the cloud resources to both the AWS and Azure clouds simultaneously. Be aware that this script can take over thirty (30) minutes to execute. Azure alone take about twenty minutes to provision its VPN gateway and AWS takes around twelve (12) minutes.
+The apply command will execute what terraform planned in the plan command and provision the cloud resources to both the AWS and Azure clouds simultaneously. 
 
 ```bash
 terraform destroy
@@ -99,10 +114,29 @@ terraform destroy
 
 The destroy command will remove all the assets provisioned from both AWS and Azure.
 
-### Testing
+### Testing the VPN connection and connectivity
 
-On AWS, go to VPC > Site-to-Site VPN Connections and take a look at the Tunnel Details tab under vpn_connection_1 and vpn_connection_2
+On AWS, go to **VPC > Site-to-Site VPN Connections** and take a look at the Tunnel Details tab under vpn_connection_1 and vpn_connection_2. The VPN connection should be "available" and the two tunnels should in a "up" status.
 
-On Azure, go to Virtual Network Gateways > Connections
+![AWS-VPN-Connection](./screenshots/AWS-VPN-Connection.png)
 
-Connect to each instance/vm via the public IP on the respective servers and then ping the other's private IP address. The private_key.pem file is generated and saved in the root terraform directory of this script.
+On Azure, go to **Virtual Network Gateways > Connections** and check to see if all the connections are in a "connected" status. 
+
+![Azure-Virtual-Network-Gateway](./screenshots/Azure-Virtual-Network-Gateway.png)
+
+In the above screen shot we can see one connection is stuck in the "updating" status. This seems to be a known issue with Azure virtual network gateways. You can reset the gateway with the following instructions from Microsoft for [resetting a gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/reset-gate).
+
+Connect to each instance/vm via the public IP on the respective servers and then ping the other's private IP address to test the connectivity over the VPN. 
+
+The private_key.pem file is generated and saved in the root terraform directory of this script.
+
+In the below screen shots our AWS server has an IP address of `192.168.1.212` and its counterpart in Azure has a IP address of `10.0.1.4`
+
+##### AWS
+
+![AWS-test-EC2-instance](./screenshots/AWS-test-EC2-instance.png)
+
+##### Azure
+
+![Azure-test-VM](./screenshots/Azure-test-VM.png)
+
