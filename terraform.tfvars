@@ -1,5 +1,6 @@
 custom_tags = {
   project  = "AWS to Azure VPN"
+  Jira     = "AWS-917"
   test_tag = "This is a test tag!"
 }
 application_code_name             = "aws-azure-vpn"
