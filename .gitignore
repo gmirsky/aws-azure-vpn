@@ -40,3 +40,4 @@ notes.txt
 *.md5
 public_key*
 public_key*.*
+.DS_Store
