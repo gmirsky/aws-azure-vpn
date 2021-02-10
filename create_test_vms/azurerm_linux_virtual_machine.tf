@@ -1,5 +1,5 @@
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "aws_azure_vpn_test_server"
+  name                = "awsazuretestserver"
   location            = var.azure_location
   resource_group_name = var.azure_resource_group_name
   size                = "Standard_F2"
@@ -24,7 +24,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   tags = merge(
     var.azure_user_tags,
     {
-      Name = "aws_azure_vpn_test_server"
+      Name = "awsazuretestserver"
     }
   )
 }
