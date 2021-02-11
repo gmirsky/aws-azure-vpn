@@ -13,16 +13,13 @@ The main script contains all the necessary HCL commands for terraform to provisi
 Additionally logic is compartmentalized for reusuability and for code hygiene by using the following terraform modules:
 
 - Module: `aws_user_tags` - This module gets AWS specific information such as the user ARN and puts it into a tag so that other administrators know who created the resource without having to scan the cloudwatch logs.
-
 - Module: `azure_user_tags` - This module gets Azure specific information such as the user display name, client id, etcetera and puts it into a tag so that other administrators know who created the resource without having to scan the Azure logs.
-
 - Module: `aws_ami-search` - This module automates finding the latest AWS ami image id for the selected operating system to be provisioned.
-
 - Module: `azure-region` - This module will handle the various naming conventions for Azure regions that differ from the console and the CLI.
-
 - Module: `create_test_vms` - This module will create a AWS EC2 instance and a Azure VM in the respective environemnts to test the VPN tunnel for connectivity.
-
 - Module `key-pair` - This public module from the [Terraform Registry](https://registry.terraform.io/modules/terraform-aws-modules/key-pair/aws/latest) handles all the AWS key pair processing. The output is also used by the module `create_test_vms`.
+
+![terraform_plan](./screenshots/terraform_plan.png)
 
 ## Programming and Operational Notes
 
