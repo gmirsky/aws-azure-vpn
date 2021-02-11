@@ -151,7 +151,7 @@ On Azure, go to **Virtual Network Gateways > Connections** and check to see if a
 
 ![Azure-Virtual-Network-Gateway](./screenshots/Azure-Virtual-Network-Gateway.png)
 
-In the above screen shot we can see one connection is stuck in the "updating" status. This seems to be a known issue with Azure virtual network gateways. You can reset the gateway with the following instructions from Microsoft for [resetting a gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/reset-gate).
+In the above screen shot we can see one connection is stuck in the "updating" status. This seems to be a known issue with Azure virtual network gateways. You can reset the gateway with the following instructions from Microsoft for [resetting a gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/reset-gateway).
 
 Connect to each instance/vm via the public IP on the respective servers and then ping the other's private IP address to test the connectivity over the VPN.
 
