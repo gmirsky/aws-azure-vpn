@@ -42,7 +42,7 @@ This is critical in getting the Azure public IP addresses, which are generated o
 
 Using the Terraform `depends_on` clause causes issues when dealing with two differnt cloud providers. The `depends_on` clause forces the read of the data source to always happen in the apply phase and therefore it triggers changes in the AWS components depending on what resources have provisioned first. This causes the VPN configuration to never converge and thus a loss of connectivity.
 
-In general, it is suggested to build all new or to destroy. Incremental applies may not work they way you are used to in Terraform due to the nature of the two competing cloud providers and how they are architected and how they provision assets.
+In general, it is suggested to build all new or to destroy. Especially if you have any type of auto-tagging installed in your environment. Incremental applies may not work they way you are used to in Terraform due to the nature of the two competing cloud providers and how they are architected and how they provision assets.
 
 Each `AWS VPN Connection` created has *two tunnels* with IP addresses and secret keys. To accomplish full high availability, we point each Azure Virtual Network Gateway IP address to the two IP addresses on AWS thus creating a connection mesh.
 
@@ -75,9 +75,35 @@ azure_subnet_cidr_block_2         = "10.0.2.0/24"
 azure_virtual_network_gateway_sku = "VpnGw1"
 create_test_vms                   = true
 environment                       = "dev"
+azure_publisher                   = "Canonical"
+azure_offer                       = "UbuntuServer"
+azure_sku                         = "18.04-LTS"
+azure_version                     = "latest"
 ```
 
-Perform the following commands:
+
+
+Use the following commands to find the appropriate Azure VMs if you do not want to use the default Ubuntu Server 18.04 LTS image.
+
+```bash
+$ az vm image list --output table
+
+$ az vm image list --offer UbuntuServer --all --output table
+```
+
+More detailed information about finding Azure VM images can be found [here.](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage)
+
+Use the following commands to find the appropriate AWS AMI if you do not wish to use the default Amazon Linux 2 image
+
+```bash
+$ aws ec2 describe-images --owners self amazon
+```
+
+More detailed information about finding AWS images can be found [here.](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
+
+### Terrafrom provisioning
+
+To initiate the provisioning of the resources in AWS and Azure perform the following commands:
 
 ```bash
 terraform init
@@ -140,3 +166,10 @@ In the below screen shots our AWS server has an IP address of `192.168.1.212` an
 ### Azure
 
 ![Azure-test-VM](./screenshots/Azure-test-VM.png)
+
+## Clean up
+
+Occasionally I have found that Azure does not always tear down its virtual network gateways and you will need to force the deletion of the whole resource group to delete the assets if Terraform floats up an error from Azure in the terraform destroy processes.
+
+For more information on forcibley removing Azure resource groups go [here.](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-powershell)
+
