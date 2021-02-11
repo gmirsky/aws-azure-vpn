@@ -17,3 +17,7 @@ azure_subnet_cidr_block_2         = "10.0.2.0/24"
 azure_virtual_network_gateway_sku = "VpnGw1"
 create_test_vms                   = true
 environment                       = "dev"
+azure_publisher                   = "Canonical"
+azure_offer                       = "UbuntuServer"
+azure_sku                         = "18.04-LTS"
+azure_version                     = "latest"

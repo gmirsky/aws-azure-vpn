@@ -99,3 +99,23 @@ variable "associate_public_ip_address" {
   description = "Associate public IP to the vms and instances?"
   type        = bool
 }
+
+variable "azure_publisher" {
+  description = "Azure publisher value (i.e. Canonical)"
+  type        = string
+}
+
+variable "azure_offer" {
+  description = "Azure offer value (i.e. UbuntuServer)"
+  type        = string
+}
+
+variable "azure_sku" {
+  description = "Azure sku value (i.e. 18.04-LTS)"
+  type        = string
+}
+
+variable "azure_version" {
+  description = "Azure sku version value (i.e. latest)"
+  type        = string
+}

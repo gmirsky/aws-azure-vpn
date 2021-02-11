@@ -29,12 +29,16 @@ module "create_test_vms" {
   aws_user_tags               = module.aws_user_tags.tags
   aws_vpc_id                  = aws_vpc.vpc.id
   azure_location              = module.azure_region.location
+  azure_offer                 = var.azure_offer
+  azure_public_key_openssh    = tls_private_key.this.public_key_openssh
+  azure_publisher             = var.azure_publisher
   azure_resource_group_name   = azurerm_resource_group.resource_group.name
+  azure_sku                   = var.azure_sku
+  azure_subnet_id             = azurerm_subnet.subnet_1.id
   azure_user_tags             = module.azure_user_tags.tags
+  azure_version               = var.azure_version
   count                       = var.create_test_vms == true ? 1 : 0
   source                      = "./create_test_vms"
-  azure_subnet_id             = azurerm_subnet.subnet_1.id
-  azure_public_key_openssh    = tls_private_key.this.public_key_openssh
 }
 
 module "key-pair" {

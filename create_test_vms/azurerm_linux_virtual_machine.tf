@@ -16,10 +16,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     public_key = var.azure_public_key_openssh
   }
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
-    version   = "latest"
+    publisher = var.azure_publisher
+    offer     = var.azure_offer
+    sku       = var.azure_sku
+    version   = var.azure_version
   }
   tags = merge(
     var.azure_user_tags,
