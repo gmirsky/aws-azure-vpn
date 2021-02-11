@@ -81,14 +81,12 @@ azure_sku                         = "18.04-LTS"
 azure_version                     = "latest"
 ```
 
-
-
 Use the following commands to find the appropriate Azure VMs if you do not want to use the default Ubuntu Server 18.04 LTS image.
 
 ```bash
-$ az vm image list --output table
+az vm image list --output table
 
-$ az vm image list --offer UbuntuServer --all --output table
+az vm image list --offer UbuntuServer --all --output table
 ```
 
 More detailed information about finding Azure VM images can be found [here.](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage)
@@ -96,7 +94,7 @@ More detailed information about finding Azure VM images can be found [here.](htt
 Use the following commands to find the appropriate AWS AMI if you do not wish to use the default Amazon Linux 2 image
 
 ```bash
-$ aws ec2 describe-images --owners self amazon
+aws ec2 describe-images --owners self amazon
 ```
 
 More detailed information about finding AWS images can be found [here.](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
@@ -172,4 +170,3 @@ In the below screen shots our AWS server has an IP address of `192.168.1.212` an
 Occasionally I have found that Azure does not always tear down its virtual network gateways and you will need to force the deletion of the whole resource group to delete the assets if Terraform floats up an error from Azure in the terraform destroy processes.
 
 For more information on forcibley removing Azure resource groups go [here.](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group?tabs=azure-powershell)
-
