@@ -9,7 +9,7 @@ variable "environment" {
 
 variable "custom_tags" {
   type        = map(string)
-  description = "Custom Azure tags provided by the user"
+  description = "Custom AWS tags provided by the user"
   default = {
   }
 }
