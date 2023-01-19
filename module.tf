@@ -3,23 +3,23 @@ module "azure_user_tags" {
   environment = var.environment
   source      = "./azure_user_tags"
 }
-
+#
 module "aws_user_tags" {
   custom_tags = var.custom_tags
   environment = var.environment
   source      = "./aws_user_tags"
 }
-
+#
 module "azure_region" {
   azure_region = var.azure_region
   source       = "./azure_region"
 }
-
+#
 module "aws-ami-search" {
   os     = var.aws_os
   source = "./aws-ami-search"
 }
-
+#
 module "create_test_vms" {
   associate_public_ip_address = var.associate_public_ip_address
   aws_ami                     = module.aws-ami-search.ami_id
@@ -40,7 +40,7 @@ module "create_test_vms" {
   count                       = var.create_test_vms == true ? 1 : 0
   source                      = "./create_test_vms"
 }
-
+#
 module "key-pair" {
   key_name   = "${var.application_code_name}-1"
   public_key = tls_private_key.this.public_key_openssh
@@ -48,3 +48,4 @@ module "key-pair" {
   tags       = module.aws_user_tags.tags
   version    = "0.6.0"
 }
+#

@@ -10,3 +10,4 @@ resource "azurerm_public_ip" "public_ip_vm" {
     }
   )
 }
+#

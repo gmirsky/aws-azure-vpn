@@ -13,7 +13,7 @@ resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_c
     }
   )
 }
-
+#
 resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_cxn_1_tunl_2" {
   local_network_gateway_id   = azurerm_local_network_gateway.local_network_gtwy_1_tunl_2.id
   location                   = azurerm_resource_group.resource_group.location
@@ -29,7 +29,7 @@ resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_c
     }
   )
 }
-
+#
 resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_cxn_2_tunl_1" {
   local_network_gateway_id   = azurerm_local_network_gateway.local_network_gtwy_2_tunl_1.id
   location                   = azurerm_resource_group.resource_group.location
@@ -45,7 +45,7 @@ resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_c
     }
   )
 }
-
+#
 resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_cxn_2_tunl_2" {
   local_network_gateway_id   = azurerm_local_network_gateway.local_network_gtwy_2_tunl_2.id
   location                   = azurerm_resource_group.resource_group.location
@@ -61,3 +61,4 @@ resource "azurerm_virtual_network_gateway_connection" "virtual_network_gateway_c
     }
   )
 }
+#

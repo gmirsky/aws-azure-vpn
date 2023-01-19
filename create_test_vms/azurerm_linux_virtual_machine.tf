@@ -1,9 +1,11 @@
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "awsazuretestserver"
-  location            = var.azure_location
-  resource_group_name = var.azure_resource_group_name
-  size                = "Standard_F2"
-  admin_username      = "ubuntu"
+  name                       = "awsazuretestserver"
+  location                   = var.azure_location
+  resource_group_name        = var.azure_resource_group_name
+  size                       = "Standard_F2"
+  admin_username             = "ubuntu"
+  allow_extension_operations = false
+  provision_vm_agent         = true
   network_interface_ids = [
     azurerm_network_interface.network_interface_vm.id,
   ]

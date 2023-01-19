@@ -15,7 +15,6 @@ resource "azurerm_local_network_gateway" "local_network_gtwy_1_tunl_1" {
     }
   )
 }
-
 # Tunnel from Azure to AWS vpn_connection_1 (tunnel 2)
 resource "azurerm_local_network_gateway" "local_network_gtwy_1_tunl_2" {
   name                = "local_network_gtwy_1_tunl_2"
@@ -32,7 +31,6 @@ resource "azurerm_local_network_gateway" "local_network_gtwy_1_tunl_2" {
     }
   )
 }
-
 # Tunnel from Azure to AWS vpn_connection_2 (tunnel 1)
 resource "azurerm_local_network_gateway" "local_network_gtwy_2_tunl_1" {
   name                = "local_network_gtwy_2_tunl_1"
@@ -65,3 +63,4 @@ resource "azurerm_local_network_gateway" "local_network_gtwy_2_tunl_2" {
     }
   )
 }
+#

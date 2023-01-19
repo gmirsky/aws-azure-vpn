@@ -10,7 +10,7 @@ resource "aws_vpn_connection" "vpn_connection_1" {
     }
   )
 }
-
+#
 resource "aws_vpn_connection" "vpn_connection_2" {
   customer_gateway_id = aws_customer_gateway.customer_gateway_2.id
   static_routes_only  = true
@@ -23,3 +23,4 @@ resource "aws_vpn_connection" "vpn_connection_2" {
     }
   )
 }
+#

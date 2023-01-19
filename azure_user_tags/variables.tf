@@ -5,11 +5,14 @@ variable "environment" {
     condition     = can(regex("dev|test|qa|prod", var.environment))
     error_message = "ERROR: environment must be of type: dev, test, qa or prod."
   }
+  sensitive = false
 }
-
+#
 variable "custom_tags" {
   type        = map(string)
   description = "Custom Azure tags provided by the user"
   default = {
   }
+  sensitive = false
 }
+#

@@ -1,4 +1,6 @@
 resource "azurerm_network_interface" "network_interface_vm" {
+  #checkov:skip=CKV_AWS_24:Public IP is for test/demonstration server access
+  #checkov:skip=CKV_AZURE_119:Public IP is for test/demonstration server access
   name                = "network_interface_aws_azure_vpn_test_server"
   location            = var.azure_location
   resource_group_name = var.azure_resource_group_name
@@ -15,3 +17,4 @@ resource "azurerm_network_interface" "network_interface_vm" {
     }
   )
 }
+#

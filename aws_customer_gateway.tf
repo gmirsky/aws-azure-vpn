@@ -9,7 +9,7 @@ resource "aws_customer_gateway" "customer_gateway_1" {
     }
   )
 }
-
+#
 resource "aws_customer_gateway" "customer_gateway_2" {
   bgp_asn    = 65000
   ip_address = data.azurerm_public_ip.azure_public_ip_2.ip_address
@@ -21,3 +21,4 @@ resource "aws_customer_gateway" "customer_gateway_2" {
     }
   )
 }
+#

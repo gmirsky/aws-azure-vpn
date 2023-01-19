@@ -1,12 +1,16 @@
 variable "os" {
+  type        = string
   description = "The operating system reference to search for"
+  sensitive   = false
 }
-
+#
 variable "amis_primary_owners" {
+  type        = string
   description = "Force the AMI Owner, could be (self) or specific (id)"
   default     = ""
+  sensitive   = false
 }
-
+#
 variable "amis_os_map_regex" {
   description = "Map of regex to search AMIs"
   type        = map(any)
@@ -17,6 +21,7 @@ variable "amis_os_map_regex" {
     "ubuntu-18.04"         = "^ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-.*"
     "ubuntu-18.10"         = "^ubuntu/images/hvm-ssd/ubuntu-cosmic-18.10-amd64-server-.*"
     "ubuntu-19.04"         = "^ubuntu/images/hvm-ssd/ubuntu-disco-19.04-amd64-server-.*"
+    "ubuntu-20.04"         = "^ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-.*"
     "centos"               = "^CentOS.Linux.7.*x86_64.*"
     "centos-6"             = "^CentOS.Linux.6.*x86_64.*"
     "centos-7"             = "^CentOS.Linux.7.*x86_64.*"
@@ -41,8 +46,9 @@ variable "amis_os_map_regex" {
     "windows-2012-base"    = "^Windows_Server-2012-RTM-English-64Bit-Base-.*"
     "windows-2008-r2-base" = "^Windows_Server-2008-R2_SP1-English-64Bit-Base-.*"
   }
+  sensitive = false
 }
-
+#
 variable "amis_os_map_owners" {
   description = "Map of AMIs owner to filter only official AMIs"
   type        = map(any)
@@ -53,6 +59,7 @@ variable "amis_os_map_owners" {
     "ubuntu-18.04"         = "099720109477" #CANONICAL
     "ubuntu-18.10"         = "099720109477" #CANONICAL
     "ubuntu-19.04"         = "099720109477" #CANONICAL
+    "ubuntu-20.04"         = "099720109477" #CANONICAL
     "rhel"                 = "309956199498" #Amazon Web Services
     "rhel-6"               = "309956199498" #Amazon Web Services
     "rhel-7"               = "309956199498" #Amazon Web Services
@@ -77,4 +84,6 @@ variable "amis_os_map_owners" {
     "windows-2012-base"    = "801119661308" #amazon
     "windows-2008-r2-base" = "801119661308" #amazon
   }
+  sensitive = false
 }
+#
