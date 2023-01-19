@@ -96,18 +96,38 @@ aws ec2 describe-images --owners self amazon
 
 More detailed information about finding AWS images can be found [here.](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
 
+### Terraform Code Scanning
+
+To check the Terraform code for security vulnerabilities, it is suggested to scan the code with Checkov and Tfsec.
+
+Assuming you have Docker or some other compatible container environment on your system, use the following commands to scan the code,
+
+#### Using Checkov
+
+```shell
+docker pull bridgecrew/checkov:latest
+docker run --tty --rm --volume "$(pwd):/tf" --workdir /tf bridgecrew/checkov --directory /tf --download-external-modules true
+```
+
+#### Using Tfsec
+
+```shell
+docker pull aquasec/tfsec:latest
+docker run --rm -it -v "$(pwd):/src" aquasec/tfsec --tfvars-file /src/terraform.tfvars /src
+```
+
 ### Terrafrom provisioning
 
 To initiate the provisioning of the resources in AWS and Azure perform the following commands:
 
 ```bash
-terraform init
+terraform init -upgrade
 ```
 
 The init command will load up the terraform modules and providers into your environment.
 
 ```bash
-terraform fmt
+terraform fmt -recursive
 ```
 
 The fmt (formt) command, will format your code and also spot any glaring errors like missing quotes, commas, etcetera.
@@ -138,7 +158,7 @@ The destroy command will remove all the assets provisioned from both AWS and Azu
 
 ## Testing the VPN connection and connectivity
 
-On AWS, go to **VPC > Site-to-Site VPN Connections** and take a look at the Tunnel Details tab under vpn_connection_1 and vpn_connection_2. The VPN connection should be "available" and the two tunnels should in a "up" status.
+On AWS, go to **VPC > Site-to-Site VPN Connections** and take a look at the Tunnel Details tab under `vpn_connection_1` and `vpn_connection_2`. The VPN connection should be "available" and the two tunnels should in a "up" status.
 
 ![AWS-VPN-Connection](./screenshots/AWS-VPN-Connection.png)
 
