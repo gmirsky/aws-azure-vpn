@@ -106,14 +106,14 @@ Assuming you have Docker or some other compatible container environment on your 
 
 ```shell
 docker pull bridgecrew/checkov:latest
-docker run --tty --rm --volume "$(pwd):/tf" --workdir /tf bridgecrew/checkov --directory /tf --download-external-modules true
+docker run --tty --rm --volume "$(pwd):/tf" --workdir /tf bridgecrew/checkov:latest --directory /tf --download-external-modules true
 ```
 
 #### Using Tfsec
 
 ```shell
 docker pull aquasec/tfsec:latest
-docker run --rm -it -v "$(pwd):/src" aquasec/tfsec --tfvars-file /src/terraform.tfvars /src
+docker run --rm -it -v "$(pwd):/src" aquasec/tfsec:latest --tfvars-file /src/terraform.tfvars /src
 ```
 
 ### Terrafrom provisioning
