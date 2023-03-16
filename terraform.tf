@@ -12,6 +12,27 @@ terraform {
       source  = "hashicorp/local"
       version = "2.3.0"
     }
+    # backend "s3" {
+    #   bucket         = "terraform-state-store"
+    #   key            = "terraform.tfstate"
+    #   region         = "us-east-1"
+    #   dynamodb_table = "terraform-state-lock"
+    #   encrypt        = true
+    # }
+    # backend "s3" {
+    #   bucket         = "terraform-state-store"
+    #   key            = "terraform.tfstate"
+    #   region         = "us-east-1"
+    #   dynamodb_table = "terraform-state-lock"
+    #   encrypt        = true
+    # }
+    # backend "azurerm" {
+    #   resource_group_name  = "terraform-state-store"
+    #   storage_account_name = "terraform.tfstate"
+    #   container_name       = "terraform-state-lock"
+    #   key                  = "terraform.tfstate"
+    #   encrypt              = true
+    # }
   }
 }
 #
