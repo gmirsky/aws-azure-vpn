@@ -2,15 +2,15 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.58.0"
+      version = "4.60.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.47.0"
+      version = "3.49.0"
     }
     local = {
       source  = "hashicorp/local"
-      version = "2.3.0"
+      version = "2.4.0"
     }
     # backend "s3" {
     #   bucket         = "terraform-state-store"
